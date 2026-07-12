@@ -4,8 +4,9 @@
 
 A free, private check-in tool based on **Nonviolent Communication (NVC)**
 developed by Marshall Rosenberg. No account. No server. Runs entirely in your browser.
+Your data never leaves your device — and won't sync to other devices, by design.
 
-**[→ Open the app](https://yaninatrekhleb.github.io/NVC_check_in/nvc-checkin.html)**
+**[→ Open the app](https://yaninatrekhleb.com/NVC_check_in/nvc-checkin.html)**
 
 ---
 
@@ -25,12 +26,13 @@ Your reflections are saved privately in your browser. Nothing leaves your device
 
 ## Features
 
+- 🔒 Fully private — data stays in your browser, nothing sent to any server
+- 🌐 English and Ukrainian
+- 📱 PWA — installable on your phone, works offline
 - 🌿 100+ feelings and needs from the CNVC 2022 inventory
 - 🔍 Searchable accordion dropdowns
 - 📅 History grouped by day with streak tracking
 - 📊 Trends: heatmap, top feelings, top needs
-- 🌐 English and Ukrainian
-- 📱 PWA — installable on your phone, works offline
 - 🎨 Watercolour design, no frameworks, single HTML file
 
 ## Tech
