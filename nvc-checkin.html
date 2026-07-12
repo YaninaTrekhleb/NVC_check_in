@@ -254,6 +254,7 @@ h1 em {
   transition: background 0.12s;
 }
 .dropdown-section:hover { background: var(--almond-deep); }
+.dropdown-section.is-open { background: var(--almond-deep); }
 .dropdown-section.unmet { color: var(--taupe-deep); }
 .dropdown-section.met   { color: var(--sand-deep); }
 .dropdown-section.need  { color: var(--rose-deep); }
@@ -1444,7 +1445,7 @@ class GroupedDropdown {
         return `<div class="dropdown-item" data-cat="${catKey}" data-en="${w.en.replace(/"/g,'&quot;')}" data-uk="${w.uk.replace(/"/g,'&quot;')}" data-mood="${moodClass||''}">${display}</div>`;
       }).join('') : '';
       return `
-        <div class="dropdown-section ${moodClass||''}" data-toggle-cat="${catKey}">
+        <div class="dropdown-section ${moodClass||''}${isExpanded ? ' is-open' : ''}" data-toggle-cat="${catKey}">
           <span class="sect-dot"></span><span>${L(cat)}</span>
           <span class="sect-chevron">${isExpanded ? '▾' : '▸'}</span>
         </div>
@@ -1561,24 +1562,29 @@ function closeSheet() {
 function renderSheetBody() {
   if (!currentSheetDD) return;
   sheetBody.innerHTML = currentSheetDD.buildContent();
-  sheetBody.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', () => {
-      currentSheetDD.select({ en: item.dataset.en, uk: item.dataset.uk,
-        cat: item.dataset.cat, mood: item.dataset.mood || null });
-      closeSheet();
-    });
-  });
-  sheetBody.querySelectorAll('[data-toggle-cat]').forEach(header => {
-    header.addEventListener('click', () => {
-      const cat = header.dataset.toggleCat;
-      if (currentSheetDD.expandedCats.has(cat)) currentSheetDD.expandedCats.delete(cat);
-      else currentSheetDD.expandedCats.add(cat);
-      const top = sheetBody.scrollTop;
-      renderSheetBody();
-      sheetBody.scrollTop = top;
-    });
-  });
 }
+
+// Single persistent delegation — survives every re-render
+sheetBody.addEventListener('click', e => {
+  if (!currentSheetDD) return;
+  const header = e.target.closest('[data-toggle-cat]');
+  if (header && !e.target.closest('.dropdown-item')) {
+    const cat = header.dataset.toggleCat;
+    const wasExpanded = currentSheetDD.expandedCats.has(cat);
+    if (wasExpanded) currentSheetDD.expandedCats.delete(cat);
+    else currentSheetDD.expandedCats.add(cat);
+    const top = sheetBody.scrollTop;
+    renderSheetBody();
+    requestAnimationFrame(() => { sheetBody.scrollTop = top; });
+    return;
+  }
+  const item = e.target.closest('.dropdown-item');
+  if (item) {
+    currentSheetDD.select({ en: item.dataset.en, uk: item.dataset.uk,
+      cat: item.dataset.cat, mood: item.dataset.mood || null });
+    closeSheet();
+  }
+});
 
 sheetSearch.addEventListener('input', e => {
   if (!currentSheetDD) return;
