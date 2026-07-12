@@ -241,7 +241,6 @@ h1 em {
   font-size: 13px; color: var(--ink);
   background: var(--almond-deep);
   border-bottom: 1px solid var(--line);
-  position: sticky; top: 0; z-index: 2;
 }
 
 .dropdown-section {
@@ -340,6 +339,7 @@ h1 em {
 .sheet-body {
   flex: 1; overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding-bottom: 24px;
 }
 
