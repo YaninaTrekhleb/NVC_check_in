@@ -25,13 +25,13 @@ Your reflections are saved privately in your browser. Nothing leaves your device
 
 ## Features
 
-- 100+ feelings and needs from the CNVC 2022 inventory
-- Searchable accordion dropdowns
-- History grouped by day with streak tracking
-- Trends: heatmap, top feelings, top needs
-- English and Ukrainian
-- PWA — installable on your phone, works offline
-- Watercolour design, no frameworks, single HTML file
+- 🌿 100+ feelings and needs from the CNVC 2022 inventory
+- 🔍 Searchable accordion dropdowns
+- 📅 History grouped by day with streak tracking
+- 📊 Trends: heatmap, top feelings, top needs
+- 🌐 English and Ukrainian
+- 📱 PWA — installable on your phone, works offline
+- 🎨 Watercolour design, no frameworks, single HTML file
 
 ## Tech
 
