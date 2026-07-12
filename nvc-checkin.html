@@ -262,7 +262,8 @@ h1 em {
 .dropdown-section.unmet .sect-dot { background: var(--taupe-deep); }
 .dropdown-section.met   .sect-dot { background: var(--sand-deep); }
 .dropdown-section.need  .sect-dot { background: var(--rose-deep); }
-.sect-chevron { margin-left: auto; font-size: 10px; color: var(--ink-light); flex-shrink: 0; }
+.sect-chevron { margin-left: auto; font-size: 11px; color: var(--ink-light); flex-shrink: 0; transition: color 0.15s; }
+.dropdown-section.is-open .sect-chevron { color: var(--ink); }
 
 .dropdown-item {
   padding: 11px 16px 11px 24px; cursor: pointer;
@@ -1570,12 +1571,12 @@ sheetBody.addEventListener('click', e => {
   const header = e.target.closest('[data-toggle-cat]');
   if (header && !e.target.closest('.dropdown-item')) {
     const cat = header.dataset.toggleCat;
-    const wasExpanded = currentSheetDD.expandedCats.has(cat);
-    if (wasExpanded) currentSheetDD.expandedCats.delete(cat);
+    if (currentSheetDD.expandedCats.has(cat)) currentSheetDD.expandedCats.delete(cat);
     else currentSheetDD.expandedCats.add(cat);
-    const top = sheetBody.scrollTop;
     renderSheetBody();
-    requestAnimationFrame(() => { sheetBody.scrollTop = top; });
+    // Bring the header back into view after re-render (works for both open and close)
+    const updated = sheetBody.querySelector(`[data-toggle-cat="${cat}"]`);
+    if (updated) updated.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     return;
   }
   const item = e.target.closest('.dropdown-item');
